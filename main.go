@@ -11,11 +11,11 @@ func index(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
 		return
 	}
-
-	fmt.Fprintf(w, "Post from website! r.PostFrom = %v\n", r.PostForm)
 	data := r.FormValue("data")
 
-	fmt.Fprintf(w, "data = %s\n", data)
+	fmt.Fprintf(w, "OK")
+
+	log.Println(data)
 }
 
 func main() {
