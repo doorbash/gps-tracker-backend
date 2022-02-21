@@ -11,11 +11,15 @@ func index(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "ParseForm() err: %v", err)
 		return
 	}
-	data := r.FormValue("data")
+
+	datetime := r.FormValue("datetime")
+	longitude := r.FormValue("longitude")
+	latitude := r.FormValue("latitude")
+	altitude := r.FormValue("altitude")
 
 	fmt.Fprintf(w, "OK")
 
-	log.Println(data)
+	log.Printf("datetime: %s, longitude: %s, altitude: %s, altitude: %s\n", datetime, longitude, latitude, altitude)
 }
 
 func main() {
