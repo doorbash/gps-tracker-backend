@@ -13,13 +13,13 @@ func index(w http.ResponseWriter, r *http.Request) {
 	}
 
 	datetime := r.FormValue("datetime")
-	longitude := r.FormValue("longitude")
 	latitude := r.FormValue("latitude")
+	longitude := r.FormValue("longitude")
 	altitude := r.FormValue("altitude")
 
 	fmt.Fprintf(w, "OK")
 
-	log.Printf("datetime: %s, longitude: %s, altitude: %s, altitude: %s\n", datetime, longitude, latitude, altitude)
+	log.Printf("datetime: %s, latitude: %s, longitude: %s, altitude: %s\n", datetime, latitude, longitude, altitude)
 }
 
 func main() {
