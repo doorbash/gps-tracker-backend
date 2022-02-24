@@ -131,6 +131,8 @@ func list(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "ERROR")
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 	w.Write(data)
 }
 
