@@ -18,7 +18,8 @@ const (
 
 func index(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
-		fmt.Fprintf(w, "ParseForm() err: %v", err)
+		log.Println(err)
+		fmt.Fprintf(w, "ERROR")
 		return
 	}
 
@@ -78,7 +79,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err = stmt.Exec(dt, lat, lng, alt)
+	_, err = stmt.Exec(dt.Unix(), lat, lng, alt)
 	if err != nil {
 		log.Println(err)
 		fmt.Fprintf(w, "ERROR")
@@ -86,7 +87,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Fprintf(w, "OK")
-
 }
 
 func list(w http.ResponseWriter, r *http.Request) {
@@ -135,6 +135,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	http.HandleFunc("/", index)
 	http.HandleFunc("/list", list)
 	log.Fatal(http.ListenAndServe("0.0.0.0:3000", nil))
