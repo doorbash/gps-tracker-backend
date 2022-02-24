@@ -1,4 +1,3 @@
-## Usage
 **Docker Compose:**
 ```
   gps-tracker:
