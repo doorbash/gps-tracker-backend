@@ -23,14 +23,26 @@ func index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	datetime := r.FormValue("datetime")
-	latitude := r.FormValue("latitude")
-	longitude := r.FormValue("longitude")
-	altitude := r.FormValue("altitude")
+	datetime := r.FormValue("dt")
+	latitude := r.FormValue("lat")
+	longitude := r.FormValue("lng")
+	altitude := r.FormValue("alt")
+	hdop := r.FormValue("hdop")
+	pdop := r.FormValue("pdop")
+	vdop := r.FormValue("vdop")
 
-	log.Printf("datetime: %s, latitude: %s, longitude: %s, altitude: %s\n", datetime, latitude, longitude, altitude)
+	log.Printf(
+		"datetime: %s, latitude: %s, longitude: %s, altitude: %s, hdop: %s, pdop: %s, vdop: %s\n",
+		datetime,
+		latitude,
+		longitude,
+		altitude,
+		hdop,
+		pdop,
+		vdop,
+	)
 
-	if datetime == "" || latitude == "" || longitude == "" || altitude == "" {
+	if datetime == "" || latitude == "" || longitude == "" || altitude == "" || hdop == "" || pdop == "" || vdop == "" {
 		log.Println("bad input")
 		fmt.Fprintf(w, "ERROR")
 		return
@@ -64,6 +76,27 @@ func index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	hd, err := strconv.ParseFloat(hdop, 64)
+	if err != nil {
+		log.Println(err)
+		fmt.Fprintf(w, "ERROR")
+		return
+	}
+
+	pd, err := strconv.ParseFloat(pdop, 64)
+	if err != nil {
+		log.Println(err)
+		fmt.Fprintf(w, "ERROR")
+		return
+	}
+
+	vd, err := strconv.ParseFloat(vdop, 64)
+	if err != nil {
+		log.Println(err)
+		fmt.Fprintf(w, "ERROR")
+		return
+	}
+
 	db, err := sql.Open("sqlite3", fmt.Sprintf("./%s", DB_NAME))
 	defer db.Close()
 	if err != nil {
@@ -72,14 +105,14 @@ func index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	stmt, err := db.Prepare("INSERT INTO LatLng(datetime, lat, lng, alt) values(?,?,?,?)")
+	stmt, err := db.Prepare("INSERT INTO LatLng(datetime, lat, lng, alt, hdop, pdop, vdop) values(?,?,?,?,?,?,?)")
 	if err != nil {
 		log.Println(err)
 		fmt.Fprintf(w, "ERROR")
 		return
 	}
 
-	_, err = stmt.Exec(dt.Unix(), lat, lng, alt)
+	_, err = stmt.Exec(dt.Unix(), lat, lng, alt, hd, pd, vd)
 	if err != nil {
 		log.Println(err)
 		fmt.Fprintf(w, "ERROR")
