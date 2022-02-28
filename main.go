@@ -142,15 +142,21 @@ func list(w http.ResponseWriter, r *http.Request) {
 	var lat float64
 	var lng float64
 	var alt float64
+	var hdop float64
+	var pdop float64
+	var vdop float64
 
 	ret := make([]LatLng, 0)
 	for rows.Next() {
-		err = rows.Scan(&datetime, &lat, &lng, &alt)
+		err = rows.Scan(&datetime, &lat, &lng, &alt, &hdop, &pdop, &vdop)
 		ret = append(ret, LatLng{
 			Datetime:  datetime,
 			Latitude:  lat,
 			Longitude: lng,
 			ALtitude:  alt,
+			HDOP:      hdop,
+			PDOP:      pdop,
+			VDOP:      vdop,
 		})
 		if err != nil {
 			log.Println(err)
