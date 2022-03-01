@@ -1,5 +1,9 @@
 **Database:**
 ```
+CREATE TABLE "Device" (
+	"id"	TEXT NOT NULL,
+	PRIMARY KEY("id")
+);
 CREATE TABLE "LatLng" (
 	"device_id"	TEXT NOT NULL,
 	"datetime"	INTEGER NOT NULL,
@@ -10,7 +14,7 @@ CREATE TABLE "LatLng" (
 	"pdop"	REAL NOT NULL,
 	"vdop"	REAL NOT NULL,
 	PRIMARY KEY("device_id","datetime")
-)
+);
 ```
 
 **Docker Compose:**

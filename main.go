@@ -113,6 +113,13 @@ func index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	row := db.QueryRow("SELECT * from Device where id = ?", deviceId)
+	if row == nil {
+		log.Println("device not found")
+		fmt.Fprintf(w, "ERROR")
+		return
+	}
+
 	stmt, err := db.Prepare("INSERT INTO LatLng(device_id, datetime, lat, lng, alt, hdop, pdop, vdop) values(?,?,?,?,?,?,?,?)")
 	if err != nil {
 		log.Println(err)
