@@ -1,6 +1,7 @@
 **Database:**
 ```
 CREATE TABLE "LatLng" (
+	"device_id"	TEXT NOT NULL,
 	"datetime"	INTEGER NOT NULL,
 	"lat"	REAL NOT NULL,
 	"lng"	REAL NOT NULL,
@@ -8,7 +9,7 @@ CREATE TABLE "LatLng" (
 	"hdop"	REAL NOT NULL,
 	"pdop"	REAL NOT NULL,
 	"vdop"	REAL NOT NULL,
-	PRIMARY KEY("datetime")
+	PRIMARY KEY("device_id","datetime")
 )
 ```
 
