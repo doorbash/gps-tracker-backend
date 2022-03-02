@@ -1,5 +1,5 @@
 **Database:**
-```
+```sql
 CREATE TABLE "Device" (
 	"id"	TEXT NOT NULL,
 	PRIMARY KEY("id")
@@ -17,12 +17,12 @@ CREATE TABLE "LatLng" (
 );
 ```
 
-```
+```sql
 INSERT INTO Device(id) VALUES("00000000000000000000");
 ```
 
 **Docker Compose:**
-```
+```yaml
   gps-tracker:
     restart: always
     logging:
