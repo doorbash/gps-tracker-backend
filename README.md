@@ -17,6 +17,10 @@ CREATE TABLE "LatLng" (
 );
 ```
 
+```
+INSERT INTO Device(id) VALUES("00000000000000000000");
+```
+
 **Docker Compose:**
 ```
   gps-tracker:
